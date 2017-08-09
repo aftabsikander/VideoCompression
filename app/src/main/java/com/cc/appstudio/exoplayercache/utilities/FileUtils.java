@@ -1,6 +1,7 @@
 package com.cc.appstudio.exoplayercache.utilities;
 
 import android.content.Context;
+import android.os.Environment;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,7 +13,8 @@ import java.io.IOException;
 public class FileUtils {
 
     public static File getVideoCacheDir(Context context) {
-        return new File(context.getExternalCacheDir(), "video-cache");
+        String root = Environment.getExternalStorageDirectory().toString();
+        return new File(root, "video-cache");
     }
 
     public static void cleanVideoCacheDir(Context context) throws IOException {
