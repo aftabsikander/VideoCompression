@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/VideoCompression.iml" filepath="$PROJECT_DIR$/.idea/VideoCompression.iml" />
       <module fileurl="file://$PROJECT_DIR$/VideoCompressor.iml" filepath="$PROJECT_DIR$/VideoCompressor.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>

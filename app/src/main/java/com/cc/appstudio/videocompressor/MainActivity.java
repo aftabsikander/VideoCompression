@@ -1,7 +1,10 @@
 package com.cc.appstudio.videocompressor;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -169,6 +172,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
                 Toast.makeText(this, formatString(file.getAbsolutePath(),
                         file.length()), Toast.LENGTH_LONG).show();
+                forceUpdateMediaScanner(this, file.getAbsolutePath());
             } else if (data != null) {
                 Exception e = (Exception) data.getSerializableExtra(MaterialCamera.ERROR_EXTRA);
                 if (e != null) {
@@ -182,7 +186,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                 final File file = new File(data.getData().getPath());
                 Toast.makeText(this, formatString(file.getAbsolutePath(),
                         file.length()), Toast.LENGTH_LONG).show();
-
+                forceUpdateMediaScanner(this, file.getAbsolutePath());
                 startCompressServiceForVideo(file.getAbsolutePath());
             } else if (data != null) {
                 Exception e = (Exception) data.getSerializableExtra(MaterialCamera.ERROR_EXTRA);
@@ -199,6 +203,16 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
             }
         }
 
+    }
+
+    public static void forceUpdateMediaScanner(Context context, String filePathForScan) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
+                    Uri.parse("file://" + filePathForScan)));
+        } else {
+            context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED,
+                    Uri.parse("file://" + filePathForScan)));
+        }
     }
 
     @Override
